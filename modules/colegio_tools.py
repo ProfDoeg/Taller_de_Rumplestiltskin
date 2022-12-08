@@ -143,7 +143,7 @@ def get_op_return(txn_ident):
   r = requests.get(f'https://sochain.com/api/v2/tx/DOGE/{txn_ident}')
   outs=json.loads(r.text)['data']['outputs']
   asm=outs[-1]['script_asm']
-  hx=outs[-1]['script_hex']
+  hx=outs[-1]['script_hex'][4:]
   if 'OP_RETURN' in asm:
     return (asm[10:] if len(asm[10:])%2==0 else hx),outs[0]['spent']['txid'] if outs[0]['spent'] else None
   else:
